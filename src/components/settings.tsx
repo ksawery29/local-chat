@@ -54,7 +54,7 @@ const Settings = (): React.JSX.Element => {
                 <Input
                     value={temperature}
                     onChange={(event) => {
-                        setTemperature(parseInt(event.target.value));
+                        setTemperature(parseFloat(event.target.value));
                         localStorage.setItem(
                             "settings",
                             JSON.stringify({
@@ -71,7 +71,7 @@ const Settings = (): React.JSX.Element => {
                 <Input
                     value={topK}
                     onChange={(event) => {
-                        setTopK(parseInt(event.target.value));
+                        setTopK(parseFloat(event.target.value));
                         localStorage.setItem(
                             "settings",
                             JSON.stringify({
