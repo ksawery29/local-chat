@@ -6,7 +6,8 @@ const Input: React.FC<{
     setInputValue: React.Dispatch<React.SetStateAction<string>>;
     inputValue: string;
     send: () => Promise<void>;
-}> = ({ setInputValue, send, inputValue }): React.JSX.Element => {
+    sending: boolean;
+}> = ({ setInputValue, send, inputValue, sending }): React.JSX.Element => {
     return (
         <div className="w-[100%] flex items-center">
             <input
@@ -19,9 +20,12 @@ const Input: React.FC<{
                 }}
             />
 
-            <button onClick={send}>
+            <button onClick={send} disabled={sending}>
+                {/* change opacity on send */}
                 <FontAwesomeIcon
-                    className="ml-5"
+                    className={`ml-5 ${
+                        sending ? "opacity-50" : "opacity-100"
+                    } transition-opacity duration-300 ease-in-out`}
                     icon={faPaperPlane}
                     color="black"
                     size="xl"

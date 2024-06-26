@@ -39,6 +39,9 @@ export default function Home() {
     const [inputValue, setInputValue] = useState<string>("");
     const [messages, setMessages] = useState<Message[]>([]);
 
+    // check if message is sending
+    const [sending, setSending] = useState<boolean>(false);
+
     if (!supports) {
         return <NotSupported />;
     }
@@ -51,6 +54,7 @@ export default function Home() {
                 <Input
                     setInputValue={setInputValue}
                     inputValue={inputValue}
+                    sending={sending}
                     send={async () => {
                         if (inputValue.length === 0) {
                             // message cannot be empty
@@ -70,6 +74,7 @@ export default function Home() {
                         });
 
                         const message = inputValue;
+                        setSending(true);
 
                         // clear input value
                         setInputValue("");
@@ -82,6 +87,7 @@ export default function Home() {
                                 { author: "ai", content: predicted },
                             ];
                         });
+                        setSending(false);
                     }}
                 />
 

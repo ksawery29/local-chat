@@ -1,5 +1,5 @@
 import { Message } from "@/app/page";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const UserMessage: React.FC<{ content: string }> = ({
     content,
@@ -28,6 +28,13 @@ const AIMessage: React.FC<{ content: string }> = ({
 const ChatBox: React.FC<{ messages: Message[] }> = ({
     messages,
 }): React.JSX.Element => {
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        // scroll down on new message
+        ref.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
+
     return (
         <div className="w-[100%] h-[90%] overflow-auto">
             {messages &&
@@ -44,6 +51,7 @@ const ChatBox: React.FC<{ messages: Message[] }> = ({
                         ></AIMessage> // Example for other authors
                     )
                 )}
+            <div ref={ref} />
         </div>
     );
 };
