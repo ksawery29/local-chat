@@ -1,37 +1,48 @@
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+"use client"
 
-const Input: React.FC<{
-    setInputValue: React.Dispatch<React.SetStateAction<string>>;
-    inputValue: string;
-    send: () => Promise<void>;
-    sending: boolean;
-}> = ({ setInputValue, send, inputValue, sending }): React.JSX.Element => {
+import { SendIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { z } from "zod"
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useLLMAddMessage, useLLMGeneratingResponse } from "@/app/usellm";
+
+const schema = z.object({
+    message: z.string(),
+})
+
+export const ChatInput = () => {
+
+    const generating = useLLMGeneratingResponse();
+    const addMessage = useLLMAddMessage();
+
+    const form = useForm<z.infer<typeof schema>>({
+        resolver: zodResolver(schema),
+        defaultValues: {
+            message: "",
+        }
+    })
+
+    const handleSubmit = form.handleSubmit(async (data) => {
+        form.reset();
+        await addMessage(data.message);
+    })
+
     return (
-        <div className="w-[100%] flex items-center">
-            <input
+        <form onSubmit={handleSubmit} className="w-[100%] flex items-center gap-2">
+            <Input
                 type="text"
                 className="border w-[95%] border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Your message"
-                value={inputValue}
-                onChange={(event) => {
-                    setInputValue(event.target.value);
-                }}
+                {...form.register("message")}
             />
 
-            <button onClick={send} disabled={sending}>
-                {/* change opacity on send */}
-                <FontAwesomeIcon
-                    className={`ml-5 ${
-                        sending ? "opacity-50" : "opacity-100"
-                    } transition-opacity duration-300 ease-in-out`}
-                    icon={faPaperPlane}
-                    color="black"
-                    size="xl"
+            <Button disabled={generating} type="submit" variant="secondary" size="icon">
+                <SendIcon data-loading={generating} className="opacity-100 data-[loading=true]:opacity-50 transition-opacity duration-300 ease-in-out text-black"
                 />
-            </button>
-        </div>
+            </Button>
+        </form>
     );
 };
 
