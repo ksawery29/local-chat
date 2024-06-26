@@ -6,6 +6,7 @@ import ChatContainer from "@/components/chat/chat-container";
 import Input from "@/components/chat/input";
 import Header from "@/components/header";
 import NotSupported from "@/components/not-supported";
+import Settings from "@/components/settings";
 import { useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -31,8 +32,25 @@ export default function Home() {
     const [session, setSession] = useState<any>();
     useEffect(() => {
         (async () => {
+            // get settings
+            const data = JSON.parse(
+                localStorage.getItem("settings") ?? "{}"
+            ) as {
+                temperature: number;
+                topK: number;
+            };
+
+            let settings = {};
+            if (Object.keys(data).length != 0) {
+                if (!data.temperature || !data.topK) {
+                    toast.error("temperature or topP cannot be empty");
+                } else {
+                    settings = data;
+                }
+            }
+
             if (supports === true && session === undefined) {
-                setSession(await window.ai.createTextSession());
+                setSession(await window.ai.createTextSession(settings));
             }
         })();
     }, [supports]);
@@ -50,6 +68,7 @@ export default function Home() {
     return (
         <>
             <Header />
+            <Settings />
             <ChatContainer>
                 <ChatBox messages={messages} />
 
