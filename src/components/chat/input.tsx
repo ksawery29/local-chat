@@ -14,7 +14,6 @@ const Input: React.FC<{
                 placeholder="Your message"
                 onChange={(event) => {
                     message.current = event.target.value;
-                    console.log(message);
                 }}
             />
 
