@@ -36,7 +36,7 @@ export default function Home() {
         })();
     }, [supports]);
 
-    const inputValue = useRef<string>("");
+    const [inputValue, setInputValue] = useState<string>("");
     const [messages, setMessages] = useState<Message[]>([]);
 
     if (!supports) {
@@ -49,9 +49,10 @@ export default function Home() {
                 <ChatBox messages={messages} />
 
                 <Input
-                    message={inputValue}
+                    setInputValue={setInputValue}
+                    inputValue={inputValue}
                     send={async () => {
-                        if (inputValue.current.length === 0) {
+                        if (inputValue.length === 0) {
                             // message cannot be empty
                             toast.error("Message cannot be empty");
                             return;
@@ -63,15 +64,18 @@ export default function Home() {
                                 ...old,
                                 {
                                     author: "user",
-                                    content: inputValue.current,
+                                    content: inputValue,
                                 },
                             ];
                         });
 
+                        const message = inputValue;
+
+                        // clear input value
+                        setInputValue("");
+
                         // append messages
-                        const predicted = await session.prompt(
-                            inputValue.current
-                        );
+                        const predicted = await session.prompt(message);
                         setMessages((old) => {
                             return [
                                 ...old,
