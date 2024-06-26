@@ -2,6 +2,7 @@
 
 import { useLLMMessages, useLLMStreamedResponse } from "@/app/usellm";
 import { useEffect, useRef } from "react";
+import { MarkdownDisplay } from "../MarkdownDisplay";
 
 const UserMessage = (props: { content: string }) => {
     return (
@@ -16,8 +17,8 @@ const UserMessage = (props: { content: string }) => {
 const AIMessage = (props: { content: string }) => {
     return (
         <div className="flex justify-start br-5 items-center">
-            <div className="bg-blue-500 max-w-xl text-start rounded-lg p-2 ml-5 mb-5">
-                <p className="text-white">{props.content}</p>
+            <div className="bg-blue-500 max-w-xl text-start rounded-lg p-2 ml-5 mb-5 text-white">
+                <MarkdownDisplay text={props.content} />
             </div>
         </div>
     );
