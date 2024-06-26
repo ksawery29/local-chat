@@ -1,5 +1,6 @@
 "use client";
 
+import BottomIcons from "@/components/bottom-icons";
 import ChatBox from "@/components/chat/chat-box";
 import ChatContainer from "@/components/chat/chat-container";
 import Input from "@/components/chat/input";
@@ -43,38 +44,47 @@ export default function Home() {
     }
 
     return (
-        <ChatContainer>
-            <ChatBox messages={messages} />
+        <>
+            <ChatContainer>
+                <ChatBox messages={messages} />
 
-            <Input
-                message={inputValue}
-                send={async () => {
-                    if (inputValue.current.length === 0) {
-                        // message cannot be empty
-                        toast.error("Message cannot be empty");
-                        return;
-                    }
+                <Input
+                    message={inputValue}
+                    send={async () => {
+                        if (inputValue.current.length === 0) {
+                            // message cannot be empty
+                            toast.error("Message cannot be empty");
+                            return;
+                        }
 
-                    // add message sent by user
-                    setMessages((old) => {
-                        return [
-                            ...old,
-                            {
-                                author: "user",
-                                content: inputValue.current,
-                            },
-                        ];
-                    });
+                        // add message sent by user
+                        setMessages((old) => {
+                            return [
+                                ...old,
+                                {
+                                    author: "user",
+                                    content: inputValue.current,
+                                },
+                            ];
+                        });
 
-                    // append messages
-                    const predicted = await session.prompt(inputValue.current);
-                    setMessages((old) => {
-                        return [...old, { author: "ai", content: predicted }];
-                    });
-                }}
-            />
+                        // append messages
+                        const predicted = await session.prompt(
+                            inputValue.current
+                        );
+                        setMessages((old) => {
+                            return [
+                                ...old,
+                                { author: "ai", content: predicted },
+                            ];
+                        });
+                    }}
+                />
 
-            <Toaster />
-        </ChatContainer>
+                <Toaster />
+            </ChatContainer>
+
+            <BottomIcons />
+        </>
     );
 }
