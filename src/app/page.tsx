@@ -1,5 +1,6 @@
 "use client";
 
+import ChatContainer from "@/components/chat/chat-container";
 import NotSupported from "@/components/not-supported";
 import { useEffect, useState } from "react";
 
@@ -23,8 +24,8 @@ export default function Home() {
     }
 
     return (
-        <main>
-            <p>hello world</p>
-        </main>
+        <ChatContainer>
+            <p></p>
+        </ChatContainer>
     );
 }
