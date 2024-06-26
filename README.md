@@ -1,5 +1,5 @@
 ## Local Chat
-Chat with gemini locally, without internet access. 
+Chat with gemini locally, without needing an internet connection using `window.ai`.
 
 ## Instructions
 1. **Set your browser language to `English US`**
