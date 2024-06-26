@@ -4,6 +4,7 @@ import BottomIcons from "@/components/bottom-icons";
 import ChatBox from "@/components/chat/chat-box";
 import ChatContainer from "@/components/chat/chat-container";
 import Input from "@/components/chat/input";
+import Header from "@/components/header";
 import NotSupported from "@/components/not-supported";
 import { useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
@@ -48,6 +49,7 @@ export default function Home() {
 
     return (
         <>
+            <Header />
             <ChatContainer>
                 <ChatBox messages={messages} />
 
