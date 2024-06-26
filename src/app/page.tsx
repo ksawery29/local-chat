@@ -3,7 +3,7 @@
 import ChatContainer from "@/components/chat/chat-container";
 import Input from "@/components/chat/input";
 import NotSupported from "@/components/not-supported";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
     const [supports, setSupports] = useState<boolean>(true);
@@ -24,9 +24,16 @@ export default function Home() {
         return <NotSupported />;
     }
 
+    const message = useRef<string>("");
+
     return (
         <ChatContainer>
-            <Input />
+            <Input
+                message={message}
+                send={async () => {
+                    console.log(message);
+                }}
+            />
         </ChatContainer>
     );
 }
