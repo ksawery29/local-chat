@@ -1,17 +1,18 @@
 "use client";
 
 import ChatContainer from "@/components/chat/chat-container";
+import Input from "@/components/chat/input";
 import NotSupported from "@/components/not-supported";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-    // check if browser supports window.ai
-    if (typeof window.ai === "undefined") {
-        return <NotSupported />;
-    }
-
     const [supports, setSupports] = useState<boolean>(true);
     useEffect(() => {
+        // check if browser supports window.ai
+        if (typeof window.ai === "undefined") {
+            setSupports(false);
+        }
+
         (async () => {
             if ((await window.ai.canCreateTextSession()) !== "readily") {
                 setSupports(false);
@@ -25,7 +26,7 @@ export default function Home() {
 
     return (
         <ChatContainer>
-            <p></p>
+            <Input />
         </ChatContainer>
     );
 }
