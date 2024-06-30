@@ -48,7 +48,7 @@ const ChatBox: React.FC<{ messages: Message[] }> = ({
                         <AIMessage
                             key={index}
                             content={data.content}
-                        ></AIMessage> // Example for other authors
+                        ></AIMessage>
                     )
                 )}
             <div ref={ref} />

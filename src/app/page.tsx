@@ -102,6 +102,7 @@ export default function Home() {
 
                         // append messages
                         const predicted = await session.prompt(message);
+
                         setMessages((old) => {
                             return [
                                 ...old,
