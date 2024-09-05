@@ -1,3 +1,6 @@
+> [!CAUTION]
+> As of chrome 130.0 (or even earlier), this demo does no longer work due to an API change
+
 ## Local Chat
 Chat with gemini locally without needing an internet connection using `window.ai`.
 
